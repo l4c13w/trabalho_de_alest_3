@@ -6,7 +6,33 @@ public class ArvoreAVL {
     private String caminhoPreOrdem;
     private String caminhoPosOrdem;
     private String caminhoLargura;
+    public NodoAVL getRaiz(ArvoreAVL arvore) {
+        return arvore.raiz;
+    }
+    public int getTamanho(ArvoreAVL arvore) {
+        return arvore.tamanho;
+    }
+    public String getCaminhoPosOrdem(ArvoreAVL arvore) {
+        return caminhoPosOrdem;
+    }
+    public String getCaminhoLargura(ArvoreAVL arvore) {
+        return caminhoLargura;
+    }
+    public String getCaminhoPreOrdem(ArvoreAVL arvore) {
+        return caminhoPreOrdem;
+    }
+    public void adicionar(int chave) {
+        raiz = adicionar(chave, raiz);
+        tamanho++;
+    }
+    //implementar remover
+    public void remover(int chave) {
 
+    }
+    //implementar existe
+    public boolean existe(int chave) {
+        return true;
+    }
     private int maximo(int a, int b) {
         if(a>b) return a;
         else return b;
@@ -19,10 +45,7 @@ public class ArvoreAVL {
         if(n==null) return 0;
         else return obterAltura(n.esquerda) - obterAltura(n.direita);
     }
-    public void adicionar(int chave) {
-        raiz = adicionar(chave, raiz);
-        tamanho++;
-    }
+
     private NodoAVL adicionar(int chave, NodoAVL n) {
         if(n==null) {
             n = new NodoAVL(chave);
