@@ -2,9 +2,6 @@ package T3_classe_AVL_completa;
 
 public class AppAVL {
     public static void main(String[] args) {
-
-        System.out.printf("\f");
-
         //arvore1
         ArvoreAVL arvore1 = new ArvoreAVL();
         arvore1.adicionar(50);

@@ -12,22 +12,30 @@ public class ArvoreAVL {
     public int getTamanho(ArvoreAVL arvore) {
         return arvore.tamanho;
     }
+    public String getCaminhoPreOrdem(ArvoreAVL arvore) {
+        return caminhoPreOrdem;
+    }
     public String getCaminhoPosOrdem(ArvoreAVL arvore) {
         return caminhoPosOrdem;
     }
     public String getCaminhoLargura(ArvoreAVL arvore) {
         return caminhoLargura;
     }
-    public String getCaminhoPreOrdem(ArvoreAVL arvore) {
-        return caminhoPreOrdem;
-    }
+
     public void adicionar(int chave) {
         raiz = adicionar(chave, raiz);
         tamanho++;
     }
     //implementar remover
     public void remover(int chave) {
-
+        if (raiz.chave == chave) {
+            raiz = null;
+        }
+        else if (chave < raiz.chave) {
+            if (raiz.esquerda.chave == chave) {
+                raiz.esquerda = null;
+            }
+        }
     }
     //implementar existe
     public boolean existe(int chave) {
@@ -46,46 +54,46 @@ public class ArvoreAVL {
         else return obterAltura(n.esquerda) - obterAltura(n.direita);
     }
 
-    private NodoAVL adicionar(int chave, NodoAVL n) {
-        if(n==null) {
-            n = new NodoAVL(chave);
+    private NodoAVL adicionar(int chave, NodoAVL raiz) {
+        if(raiz==null) {
+            raiz = new NodoAVL(chave);
         }
-        else if (chave < n.chave) {
-            n.esquerda = adicionar(chave, n.esquerda);
+        else if (chave < raiz.chave) {
+            raiz.esquerda = adicionar(chave, raiz.esquerda);
         }
-        else if (chave > n.chave) {
-            n.direita = adicionar(chave, n.direita);
+        else if (chave > raiz.chave) {
+            raiz.direita = adicionar(chave, raiz.direita);
         }
 
-        n = balancear(n, chave);
-        return n;
+        raiz = balancear(raiz, chave);
+        return raiz;
     }
-    private NodoAVL balancear(NodoAVL n, int chave) {
-        int fatorBalanceamento = calcularFatorBalanceamento(n);
+    private NodoAVL balancear(NodoAVL nodo, int chave) {
+        int fatorBalanceamento = calcularFatorBalanceamento(nodo);
 
         //atualiza a altura somando 1 recursivamente ate a raiz, folha altura = 0
-        n.altura = maximo(obterAltura(n.esquerda), obterAltura(n.direita)) + 1;
+        nodo.altura = maximo(obterAltura(nodo.esquerda), obterAltura(nodo.direita)) + 1;
 
-        if (fatorBalanceamento > 1 && chave < n.esquerda.chave) {
+        if (fatorBalanceamento > 1 && chave < nodo.esquerda.chave) {
             System.out.println("Rotacao simples a direita");
-            return rotacaoSimplesDireita(n);
+            return rotacaoSimplesDireita(nodo);
         }
 
-        if (fatorBalanceamento < -1 && chave > n.direita.chave) {
+        if (fatorBalanceamento < -1 && chave > nodo.direita.chave) {
             System.out.println("Rotacao simples a esquera");
-            return rotacaoSimplesEsquerda(n);
+            return rotacaoSimplesEsquerda(nodo);
         }
 
-        if (fatorBalanceamento > 1 && chave > n.esquerda.chave) {
+        if (fatorBalanceamento > 1 && chave > nodo.esquerda.chave) {
             System.out.println("Rotacao Esquerda Direita");
-            return rotacaoEsquerdaDireita(n);
+            return rotacaoEsquerdaDireita(nodo);
         }
 
-        if (fatorBalanceamento < -1 && chave < n.direita.chave) {
+        if (fatorBalanceamento < -1 && chave < nodo.direita.chave) {
             System.out.println("Rotacao Direita Esquerda");
-            return rotacaoDireitaEsquerda(n);
+            return rotacaoDireitaEsquerda(nodo);
         }
-        return n;
+        return nodo;
     }
 
     private NodoAVL rotacaoSimplesDireita(NodoAVL B) {
@@ -143,6 +151,4 @@ public class ArvoreAVL {
         percorrerEmPreOrdemRecursivo(n.esquerda);
         percorrerEmPreOrdemRecursivo(n.direita);
     }
-
-
 }
